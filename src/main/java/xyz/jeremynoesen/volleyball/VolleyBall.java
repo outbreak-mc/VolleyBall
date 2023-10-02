@@ -1,16 +1,16 @@
 package xyz.jeremynoesen.volleyball;
 
-import xyz.jeremynoesen.volleyball.ball.Ball;
-import xyz.jeremynoesen.volleyball.ball.BallListener;
-import xyz.jeremynoesen.volleyball.command.CommandExec;
-import xyz.jeremynoesen.volleyball.command.CommandTabComplete;
-import xyz.jeremynoesen.volleyball.court.CourtIO;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import xyz.jeremynoesen.volleyball.ball.Ball;
+import xyz.jeremynoesen.volleyball.ball.BallListener;
+import xyz.jeremynoesen.volleyball.command.CommandExec;
+import xyz.jeremynoesen.volleyball.command.CommandTabComplete;
+import xyz.jeremynoesen.volleyball.court.CourtIO;
 
 /**
  * Main class for the plugin. registers commands and listeners

@@ -1,20 +1,28 @@
 package xyz.jeremynoesen.volleyball.court;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.math.BlockVector3;
+import org.apache.commons.codec.binary.Base64;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import xyz.jeremynoesen.volleyball.Message;
 import xyz.jeremynoesen.volleyball.VolleyBall;
 import xyz.jeremynoesen.volleyball.ball.Ball;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * volleyball court with customizable ball stats and court size
@@ -72,6 +80,11 @@ public class Court {
      * net bounds
      */
     private double[][] net;
+
+    /**
+     * an item that the ball uses copies of
+     * */
+    private ItemStack ballItem;
     
     /**
      * ball used in court
@@ -110,6 +123,31 @@ public class Court {
         
         ball = null;
         courts.put(name, this);
+    }
+
+    /**
+     * @return a copy of the ball item
+     * */
+    public ItemStack getBallItem() {
+        if (ballItem == null) {
+            ballItem = new ItemStack(Material.PLAYER_HEAD, 1);
+            if (texture.isEmpty())
+                return ballItem.clone();
+            SkullMeta headMeta = (SkullMeta) ballItem.getItemMeta();
+            GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", texture).getBytes());
+            profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+            Field profileField;
+            try {
+                profileField = headMeta.getClass().getDeclaredField("profile");
+                profileField.setAccessible(true);
+                profileField.set(headMeta, profile);
+            } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e1) {
+                e1.printStackTrace();
+            }
+            ballItem.setItemMeta(headMeta);
+        }
+        return ballItem.clone();
     }
     
     /**
@@ -193,6 +231,8 @@ public class Court {
      */
     public void setTexture(String texture) {
         this.texture = texture;
+        this.ballItem = null;
+        getBallItem();
     }
     
     /**
@@ -486,13 +526,10 @@ public class Court {
      * @return true if on any court
      */
     public static boolean isOnCourt(Location l) {
-        
         for (Court court : courts.values()) {
             if (court.contains(l)) return true;
         }
-        
         return false;
-        
     }
     
     /**
@@ -502,7 +539,6 @@ public class Court {
      * @return court player is on
      */
     public static Court get(Player player) {
-        
         for (Court court : courts.values()) {
             if (court.contains(player)) {
                 return court;
@@ -518,7 +554,6 @@ public class Court {
      * @return court location is in
      */
     public static Court get(Location loc) {
-        
         for (Court court : courts.values()) {
             if (court.contains(loc)) {
                 return court;

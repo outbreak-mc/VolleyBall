@@ -75,10 +75,10 @@ public class Message {
     public static String[] HELP_MAIN = new String[]{
             "",
             ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "-------------[" + ChatColor.YELLOW +
-                    "" + ChatColor.BOLD + "Volley" + ChatColor.GOLD +
-                    "" + ChatColor.BOLD + "Ball " + ChatColor.GRAY +
-                    "" + ChatColor.BOLD + "Help"
-                    + ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "]-------------",
+                    ChatColor.BOLD + "Volley" + ChatColor.GOLD +
+                    ChatColor.BOLD + "Ball " + ChatColor.GRAY +
+                    ChatColor.BOLD + "Help" +
+                    ChatColor.DARK_GRAY + ChatColor.BOLD + "]-------------",
             ChatColor.GRAY + "/volleyball court help" + ChatColor.WHITE + ": View court commands",
             ChatColor.GRAY + "/volleyball reload" + ChatColor.WHITE + ": Reload plugin and configs",
             ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "---------------------------------------",
@@ -88,10 +88,10 @@ public class Message {
     public static String[] HELP_COURT = new String[]{
             "",
             ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "----------[" + ChatColor.YELLOW +
-                    "" + ChatColor.BOLD + "Volley" + ChatColor.GOLD +
-                    "" + ChatColor.BOLD + "Ball " + ChatColor.GRAY +
-                    "" + ChatColor.BOLD + "Court Help"
-                    + ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "]----------",
+                    ChatColor.BOLD + "Volley" + ChatColor.GOLD +
+                    ChatColor.BOLD + "Ball " + ChatColor.GRAY +
+                    ChatColor.BOLD + "Court Help" +
+                    ChatColor.DARK_GRAY + ChatColor.BOLD + "]----------",
             ChatColor.GRAY + "/volleyball court list" + ChatColor.WHITE + ": List all courts",
             ChatColor.GRAY + "/volleyball court create <name>" + ChatColor.WHITE + ": Create a new court",
             ChatColor.GRAY + "/volleyball court remove <name>" + ChatColor.WHITE + ": Remove a court",

@@ -1,23 +1,16 @@
 package xyz.jeremynoesen.volleyball.ball;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import xyz.jeremynoesen.volleyball.VolleyBall;
-import xyz.jeremynoesen.volleyball.court.Court;
-import org.apache.commons.codec.binary.Base64;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import xyz.jeremynoesen.volleyball.VolleyBall;
+import xyz.jeremynoesen.volleyball.court.Court;
 
-import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Ball creation class
@@ -81,9 +74,8 @@ public class Ball {
             as.setInvulnerable(true);
             as.setVisible(false);
             as.setBasePlate(false);
+            as.getEquipment().setHelmet(court.getBallItem());
         });
-
-        setTexture(court.getTexture());
 
         balls.add(ball);
 
@@ -91,27 +83,11 @@ public class Ball {
 
     }
 
-    /**
-     * @param url link to the player skin to get the skull from
-     */
-    public void setTexture(String url) {
-        ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
-        if (url.isEmpty())
-            return;
-        SkullMeta headMeta = (SkullMeta) head.getItemMeta();
-        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-        byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
-        profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
-        Field profileField;
-        try {
-            profileField = headMeta.getClass().getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profileField.set(headMeta, profile);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e1) {
-            e1.printStackTrace();
+    public static void reload() {
+        for(Entity ball : getBalls()) {
+            ball.remove();
+            getBalls().remove(ball);
         }
-        head.setItemMeta(headMeta);
-        ball.getEquipment().setHelmet(head);
     }
 
     /**

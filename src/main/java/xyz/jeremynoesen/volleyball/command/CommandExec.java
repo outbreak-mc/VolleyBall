@@ -1,15 +1,14 @@
 package xyz.jeremynoesen.volleyball.command;
 
-import xyz.jeremynoesen.volleyball.Message;
-import xyz.jeremynoesen.volleyball.ball.Ball;
-import xyz.jeremynoesen.volleyball.Config;
-import xyz.jeremynoesen.volleyball.court.Court;
-import xyz.jeremynoesen.volleyball.court.CourtIO;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import xyz.jeremynoesen.volleyball.Config;
+import xyz.jeremynoesen.volleyball.Message;
+import xyz.jeremynoesen.volleyball.ball.Ball;
+import xyz.jeremynoesen.volleyball.court.Court;
+import xyz.jeremynoesen.volleyball.court.CourtIO;
 
 /**
  * Command class, listens for volleyball command
@@ -45,10 +44,7 @@ public class CommandExec implements CommandExecutor {
                                 Config.getCourtConfig().reloadConfig();
                                 Config.getMessageConfig().reloadConfig();
                                 CourtIO.loadAll();
-                                for(Entity ball : Ball.getBalls()) {
-                                    ball.remove();
-                                    Ball.getBalls().remove(ball);
-                                }
+                                Ball.reload();
                                 player.sendMessage(Message.SUCCESS_RELOADED);
                             } else player.sendMessage(Message.ERROR_NO_PERMS);
                             break;

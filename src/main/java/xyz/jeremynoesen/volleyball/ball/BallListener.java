@@ -1,7 +1,5 @@
 package xyz.jeremynoesen.volleyball.ball;
 
-import xyz.jeremynoesen.volleyball.Message;
-import xyz.jeremynoesen.volleyball.court.Court;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -14,6 +12,8 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.util.Vector;
+import xyz.jeremynoesen.volleyball.Message;
+import xyz.jeremynoesen.volleyball.court.Court;
 
 /**
  * Listeners related to the ball object
@@ -82,7 +82,7 @@ public class BallListener implements Listener {
      */
     @EventHandler
     public void onEntityInteract(PlayerInteractAtEntityEvent e) {
-        if (e.getRightClicked() != null && Ball.getBalls().contains(e.getRightClicked()))
+        if (Ball.getBalls().contains(e.getRightClicked()))
             e.setCancelled(true);
     }
     
@@ -92,20 +92,14 @@ public class BallListener implements Listener {
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent e) {
         Player p = e.getPlayer();
-        if (p.isSneaking()) {
-            if (Court.get(p) != null) {
-                
-                Court court = Court.get(p);
-                
-                if (court.isEnabled()) {
-                    
-                    if (court.getBall() != null && court.getBall().isOut()) {
-                        p.sendMessage(Message.ERROR_BALL_OUT);
-                        return;
-                    } else {
-                        Ball ball = new Ball(p);
-                        ball.serve();
-                    }
+        if (p.isSneaking() && p.isOnGround()) {
+            Court court = Court.get(p);
+            if (court != null && court.isEnabled()) {
+                if (court.getBall() != null && court.getBall().isOut()) {
+                    p.sendMessage(Message.ERROR_BALL_OUT);
+                } else {
+                    Ball ball = new Ball(p);
+                    ball.serve();
                 }
             }
         }

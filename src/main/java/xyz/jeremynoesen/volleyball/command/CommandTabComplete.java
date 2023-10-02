@@ -1,10 +1,10 @@
 package xyz.jeremynoesen.volleyball.command;
 
-import xyz.jeremynoesen.volleyball.court.Court;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import xyz.jeremynoesen.volleyball.court.Court;
 
 import java.util.ArrayList;
 import java.util.List;

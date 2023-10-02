@@ -1,7 +1,7 @@
 package xyz.jeremynoesen.volleyball.court;
 
-import xyz.jeremynoesen.volleyball.VolleyBall;
 import xyz.jeremynoesen.volleyball.Config;
+import xyz.jeremynoesen.volleyball.VolleyBall;
 
 /**
  * class dedicated to loading and saving courts from and to file
