@@ -75,12 +75,14 @@ public class Ball {
 
         Location loc = player.getEyeLocation().add(player.getLocation().getDirection().multiply(0.75).setY(-0.5));
 
-        this.ball = player.getLocation().getWorld().spawn(loc, ArmorStand.class);
-        ball.setSmall(true);
-        ball.setSilent(true);
-        ball.setInvulnerable(true);
-        ball.setVisible(false);
-        ball.setBasePlate(false);
+        this.ball = player.getLocation().getWorld().spawn(loc, ArmorStand.class, as -> {
+            as.setSmall(true);
+            as.setSilent(true);
+            as.setInvulnerable(true);
+            as.setVisible(false);
+            as.setBasePlate(false);
+        });
+
         setTexture(court.getTexture());
 
         balls.add(ball);
