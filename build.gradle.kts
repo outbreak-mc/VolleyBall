@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "xyz.jeremynoesen.volleyball"
-version "1.1.7"
+version = "1.1.7"
 
 repositories {
     mavenCentral()
